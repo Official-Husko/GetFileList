@@ -1,33 +1,87 @@
 import os
+from click import argument
 from termcolor import colored
-from datetime import date
+from datetime import datetime
 from time import sleep
 import sys
-import random
-import string
+from ctypes import windll
 
-today = str(date.today())
+now = datetime.now()
+dt = now.strftime("%d/%m/%Y %H:%M:%S")
+dtds = now.strftime("%d-%m-%Y %H-%M-%S")
 version = "1.0.0"
 folder = os.listdir()
-id = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(4))
+files_list = []
+dirs_list = []
 
-os.system('cls')
+seperator = "==================================\n"
+
+if os.name == "nt":
+    os.system('cls')
+    windll.kernel32.SetConsoleTitleW("Husko's GetFileList | v" + version)
+else:
+    os.system('clear') 
 print(colored("======================================================================================================================", "red"))
 print(colored("|                                                                                                                    |", "red"))
-print(colored("|     " + colored("Product: GetFileList", "white") + colored("                                                                                    |", "red"), "red"))
+print(colored("|     " + colored("Product: GetFileList", "white") + colored("                                                                                           |", "red"), "red"))
 print(colored("|     " + colored("Version: ", "white") + version + colored("                                                                                                 |", "red"), "red"))
-print(colored("|     " + colored("Description: Get all files from a directory fast", "white") + colored("                                                               |", "red"), "red"))
+print(colored("|     " + colored("Description: Get all files & folders from a directory fast", "white") + colored("                                                     |", "red"), "red"))
 print(colored("|                                                                                                                    |", "red"))
 print(colored("======================================================================================================================", "red"))
 print("")
-print("Found " + colored(len([name for name in os.listdir('.') if os.path.isfile(name)]), "green") + " file in the current directory.")
-print("")
-print("Writing all found filenames to the text file. Filename: " + id + " - " + today + ".txt")
-print("")
-with open(id + " - " + today + ".txt", "w") as file:
+print("Please enter the path to target folder.")
+target = input(">> ")
+if not os.path.join(target):
+    print(colored("Invalid Path Provided!", "red"))
+    sleep(2)
+folder = os.listdir(target)
+with open("GetFileList Report - " + dtds + ".log", "w") as file:
     for files in folder:
-        file.write(files + "\n")
-    file.close()
+        if os.path.isfile(files):
+            filepath = os.path.join(files)
+            files_list.append(filepath)
+        elif os.path.isdir(files):
+            filepath = os.path.join(files)
+            dirs_list.append(filepath)
+        else:
+            print(files)
+    print("Files: " + str(files_list))
+    print("Folders: " + str(dirs_list))
+    """
+    file.write(seperator)
+    file.write("Generated using GetFileList by Husko ~ The right way to get & share a file list.\n")
+    file.write("Source: https://github.com/Official-Husko/GetFileList\n")
+    file.write("This report was generated at: " + dt + "\n")
+    file.write(seperator)
+    file.write("\n")
+    file.write("\n")
+    file.write("\n")
+    file.write(seperator)
+    file.write("General Information\n")
+    file.write(seperator)
+    file.write("Directory Name: " + os.path.basename(target) + "\n")
+    file.write("Directory Path: " + target + "\n")
+    file.write("File Count: " + str(len(files_list)) + "\n")
+    file.write("Directory Count: " + str(len(dirs_list)) + "\n")
+    file.write("\n")
+    file.write("\n")
+    file.write("\n")
+    file.write(seperator)
+    file.write("Present Directories\n")
+    file.write(seperator)
+    for folder in dirs_list:
+        file.write("[FOLDER] " + folder + "\n")
+    file.write("\n")
+    file.write("\n")
+    file.write("\n")
+    file.write(seperator)
+    file.write("Present Files\n")
+    file.write(seperator)
+    for ffile in files_list:
+        file.write("[FILE] " + ffile + "\n")
 print(colored("Done!", "green"))
-sleep(10)
+sleep(3)"""
 sys.exit(0)
+
+# TODO : add arguments like -help -json -path -recursive -crc32
+# TODO : fix this broken shit
