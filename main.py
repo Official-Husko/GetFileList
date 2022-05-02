@@ -16,7 +16,7 @@ files_list = []
 dirs_list = []
 hash_list = []
 
-parser = argparse.ArgumentParser(prog="GetFileList", usage='%(prog)s.exe [options]')
+parser = argparse.ArgumentParser(prog="GetFileList.exe", usage='%(prog)s [options]')
 parser.add_argument('-p', '--path',
                     dest='path_to_target',
                     default="simple",
