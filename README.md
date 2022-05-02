@@ -67,4 +67,4 @@ Present Files
 
 
 [1]:https://github.com/Official-Husko/GetFileList/wiki
-[2]:https://github.com/Official-Husko/Husko-s-SteamWorkshop-Downloader/blob/stable/LICENSE
+[2]:https://github.com/Official-Husko/GetFileList/blob/stable/LICENCE
