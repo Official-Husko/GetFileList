@@ -150,7 +150,6 @@ else:
         }
     with open("GetFileList Report - " + dtds + f".json", "w") as file:
         json.dump(json_scheme, file, indent = 6)
-    print(json_scheme)
 print(colored("Done!", "green"))
 sleep(3)
 exit(0)
